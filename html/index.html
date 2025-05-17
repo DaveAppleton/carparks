@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Page One</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
+            val = 0
+            $(document).ready(function(){
+                $("button").click(function(){
+                    $.get("https://api.data.gov.sg/v1/transport/carpark-availability",function(data,status){
+                        // data returns a single element array
+                        // carpark_data is an array in that element containing all the records
+                        // this shows how many records...
+                        $("#NUM_ITEMS").text(data.items[0].carpark_data.length)
+                        // walk through the replies
+                        str = ""
+                        for (j = 0; j < data.items[0].carpark_data.length; j++) {
+                            str = str + "<p>"+data.items[0].carpark_data[j].carpark_number + "</p>"
+                        }
+                        $("#data").text(str)
+                    })
+                })
+               
+
+            });
+            </script>
+    </head>
+    <Body>
+        <h1>Number of elements</h1>
+        <p id="NUM_ITEMS">num items</p>
+        <h1>car park ids</h1>
+        <div id="data">data</div>
+        <button>LOAD</button>
+        
+    </Body>
+</html>
